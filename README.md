@@ -1,10 +1,33 @@
+# Genstruct
 
-**Install
+Genstruct is a generator of structs for applications.
 
-npm i genstruct
+In the first moment the module generate only structs for react native, in the future the genstruct can be use for generate templates files to another libs and frameworks.
+ # Supports
+  - React Native
 
-===============================
+# New Features!
 
-**Run commands
+  - Generate screens, container and presentationals
 
-genstruct -s NameScreen 
+You can also:
+  - Change templates
+
+
+### Installation
+
+Genstruct requires [Node.js](https://nodejs.org/) v4+ to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ npm i genstruct
+```
+### Running
+
+```sh
+$ genstruct -s NameScreen
+```
+
+Want to contribute? Great!
+
