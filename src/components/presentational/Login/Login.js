@@ -12,7 +12,7 @@ import SPACING from '@config/spacing';
 import STRINGS from '@config/strings';
 import TYPOGRAPHY from '@config/typography';
 
-class Hello extends React.Component {
+class Login extends React.Component {
   render() {
     return (
      []
@@ -20,4 +20,4 @@ class Hello extends React.Component {
   }
 }
 
-export default withNavigation(Hello);
+export default withNavigation(Login);

@@ -1,35 +1,66 @@
 #! /usr/bin/env node
 const generate = require('files-generator')();
 var fs = require('fs');
+var cmd=require('node-cmd');
+
 const args = process.argv;
 if (args[2] == '-s' && args[3] !== undefined){
-  let name = args[3]
-  console.log("Gerando arquivos com o nome ",args[3])
-  var currentPath = process.cwd();
-  var dir = "templates";
-  let make_dir ;
-  if (fs.existsSync(dir)){
-    make_dir = 'templates/';
-  }else {
-    make_dir = currentPath+'/node_modules/genstruct/templates/';
-  }
-  container(name,make_dir);
-  presentational(name,make_dir);
-  index_presentational(name,make_dir);
-  screen(name,make_dir);
-  generate.on('finish', event => {
-    console.log("Finished!",event.success)
-})
+  startGenerate(args);
 }else{
   helper()
 }
 
 function helper(){
-  
   console.log("Generate files");
   console.log("----------------");
   console.log("node genstruct -s NameScreen");
+}
 
+function getNodePath(){
+  return new Promise(function(resolve, reject){
+    cmd.get(
+      'npm root -g',
+      function(err, data, stderr){
+        if (err){
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      }
+  );
+  });
+}
+
+function startGenerate(args){
+  let name = args[3]
+  getNodePath().then(function(path){
+    var currentPath = process.cwd();
+    var nodePath = path.replace(/\n/g, '');;
+    var dir = "templates";
+    let makeDir ;
+    if (fs.existsSync(dir)){
+      makeDir = 'templates/';
+      console.log("GET TEMPLATE ROOT APP PATH");
+    }else {
+      if(fs.existsSync(nodePath)){
+        console.log("GET TEMPLATE ROOT NODE PATH");
+        makeDir = nodePath+'/genstruct/templates/';
+      }else{
+        console.log("GET TEMPLATE ROOT DEPENDENCE PATH");
+        makeDir = currentPath+'/node_modules/genstruct/templates/';
+      }
+      
+    }
+    container(name,makeDir);
+    presentational(name,makeDir);
+    index_presentational(name,makeDir);
+    screen(name,makeDir);
+    generate.on('finish', event => {
+        console.log("Finished!",event.success)
+    })
+  }).catch(function(error){
+   console.log(error)
+});
 }
 
 function container(name,dir){
@@ -45,6 +76,7 @@ function container(name,dir){
     
   });
 }
+
 
 
 function presentational(name,dir){
@@ -76,7 +108,6 @@ function index_presentational(name,dir){
 }
 
 function screen(name,dir){
-  
   let file = dir+'screen.js'
   fs.readFile(file, 'utf8', function (err,data) {
     if (err) {

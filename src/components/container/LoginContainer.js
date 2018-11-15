@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 /* Componentes - presentational - Imports */
-import Hello from '@components/presentational/Hello';
+import Login from '@components/presentational/Login';
 
 import { testRedux } from '@useCases/testUseCase';
 
-class HelloContainer extends React.Component {
+class LoginContainer extends React.Component {
   render() {
     return (
-      <Hello key="hello" isLoading={this.props.isLoading} list={this.props.list} testRedux={this.props.testRedux.bind(this)} />
+      <Login key="login" isLoading={this.props.isLoading} list={this.props.list} testRedux={this.props.testRedux.bind(this)} />
     );
   }
 }
@@ -29,4 +29,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HelloContainer);
+)(LoginContainer);
