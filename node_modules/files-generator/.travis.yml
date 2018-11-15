@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- 6.9.1
+script:
+- npm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+deploy:
+  provider: npm
+  email: alexistessierdev@gmail.com
+  api_key:
+    secure: CscVTYPf9LIFyembKv5umX1/jb4gVpNsXBt6/ADCVYDGx78PSZJwIqzUJmSCc/WoxPEANFl06XtLVFcnO7iKVeGZlFKiJBWvDHj9ni84vZYaNg8UE/EEwy9oMjeNtQaSHxuUzF4VSVdnDd2Vl07LlcU/PxXeE1dAarCZEVdotrbyq/k9Q55Th7YRZHOi//NBqPfowcUeRn1WMClscgLsDgU4NU20IjB2EdamKhJOcIEkwq5AnC2kPtpLLrKF8uvxiNF+wn7kZhe+M4Z8rNF7DvifL3Z6JNWaP+mEn7LtBTPPBpZYPNC6mayfkqLf9KnWW6SlLJfk4/TorICdnIZ+zB0C5coukd1ggz07IrWSJ2QdMnW2KFwUZP9G7L4mm4zl1lgNPUfJGPP7AIEnSG/MMLV8+WEI3zZ/O4kXEnMHIMvu38TIVawBv5ILeWD/WSWrqpTpbhLNjdF1/2yW71iisMScUv3QCKZPtV8ZlBkgV6ZWGyPu2UELNemresBd8F7ojDGRrpBXJo66+7AGN6t1SIMAaNxXguX+9A3adYYPV6OvEB1NwqE1qtwX1Z4Ex37BaPZ+FLzTBRXI5yYt93H/bXHKaB/C8AwQuMuVTmTu/4WS2cGDEcXXstLX88bOVWnK0xtP/Qnn8N454pYl2cuxs4B8oVTWp8fC0lA8YC/Wwj8=
+  on:
+    repo: AlexisTessier/files-generator
+    branch: release
