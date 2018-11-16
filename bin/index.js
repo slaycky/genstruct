@@ -1,122 +1,77 @@
 #! /usr/bin/env node
-const generate = require('files-generator')();
 var fs = require('fs');
-var cmd=require('node-cmd');
-
+const generate = require('files-generator')();
+//import ReactNative from 'src/ReactNative/ReactNative';
+const Util =  require('./src/Util/Util');
+const ReactNative = require('./src/ReactNative/ReactNative');
 const args = process.argv;
-if (args[2] == '-s' && args[3] !== undefined){
-  startGenerate(args);
-}else{
-  helper()
+
+
+init();
+
+function init(){
+  switch (args[2]) {
+    case '-s':
+      if (args[3] !== undefined){
+        startGenerate(args);
+      }
+      else {
+        infor()
+      }
+      break;
+    case '-h':
+      helper()
+      break ;
+    default:
+      infor()
+    break;
+  }
 }
 
 function helper(){
-  console.log("Generate files");
-  console.log("----------------");
-  console.log("node genstruct -s NameScreen");
+  console.log("\x1b[31m Help:");
+  console.log("\x1b[33m -s NameScreen (Generate screen ReactNative)");
 }
 
-function getNodePath(){
-  return new Promise(function(resolve, reject){
-    cmd.get(
-      'npm root -g',
-      function(err, data, stderr){
-        if (err){
-          reject(err)
-        } else {
-          resolve(data)
-        }
-      }
-  );
-  });
+function infor(){
+  console.log("\x1b[32m","------------------------------");
+  console.log("\x1b[34m     #### \x1b[37m Genstruct \x1b[34m ####");
+  console.log("\x1b[32m","------------------------------");
+  console.log("\x1b[1m  \x1b[5m \x1b[5m Help - genstruct -h");
+  console.log("");
+  console.log("");
 }
+
 
 function startGenerate(args){
   let name = args[3]
-  getNodePath().then(function(path){
+  util = new Util;
+  reactNative = new ReactNative;
+  util.getNodePath().then(function(path){
     var currentPath = process.cwd();
     var nodePath = path.replace(/\n/g, '');;
     var dir = "templates";
     let makeDir ;
     if (fs.existsSync(dir)){
-      makeDir = 'templates/';
+      makeDir = 'templates/ReactNative/';
       console.log("GET TEMPLATE ROOT APP PATH");
     }else {
       if(fs.existsSync(nodePath)){
         console.log("GET TEMPLATE ROOT NODE PATH");
-        makeDir = nodePath+'/genstruct/templates/';
+        makeDir = nodePath+'/genstruct/templates/ReactNative/';
       }else{
         console.log("GET TEMPLATE ROOT DEPENDENCE PATH");
-        makeDir = currentPath+'/node_modules/genstruct/templates/';
+        makeDir = currentPath+'/node_modules/genstruct/templates/ReactNative/';
       }
       
     }
-    container(name,makeDir);
-    presentational(name,makeDir);
-    index_presentational(name,makeDir);
-    screen(name,makeDir);
-    generate.on('finish', event => {
-        console.log("Finished!",event.success)
-    })
+    reactNative.container(name,makeDir);
+    reactNative.presentational(name,makeDir);
+    reactNative.index_presentational(name,makeDir);
+    reactNative.screen(name,makeDir);
+    
   }).catch(function(error){
    console.log(error)
 });
 }
 
-function container(name,dir){
-  var file = dir+'container.js'
-  fs.readFile(file, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    var result = data.replace(/NameReplace/g, name).replace(/namereplace/g, name.toLowerCase());
-    generate({
-      ["src/components/container/"+name+"Container.js"]: result,
-      });
-    
-  });
-}
-
-
-
-function presentational(name,dir){
-
-  let file = dir+'presentational.js'
-  fs.readFile(file, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    var result = data.replace(/NameReplace/g, name).replace(/namereplace/g, name.toLowerCase());
-    generate({
-      ["src/components/presentational/"+name+"/"+name+".js"]: result,
-      });
-    
-  });
-}
-function index_presentational(name,dir){
-  let file = dir+'index_presentational.js'
-  fs.readFile(file, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    var result = data.replace(/NameReplace/g, name).replace(/namereplace/g, name.toLowerCase());
-    generate({
-      ["src/components/presentational/"+name+"/index.js"]: result,
-      });
-   
-  });
-}
-
-function screen(name,dir){
-  let file = dir+'screen.js'
-  fs.readFile(file, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    var result = data.replace(/NameReplace/g, name).replace(/namereplace/g, name.toLowerCase());
-    generate({
-      ["src/screens/"+name+"Screen.js"]: result,
-      });
-    
-  });
-}
