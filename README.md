@@ -27,6 +27,7 @@ $ npm i genstruct
 
 ```sh
 $ genstruct -s NameScreen
+$ genstruct -r ReducerScreen
 ```
 
 Want to contribute? Great!
