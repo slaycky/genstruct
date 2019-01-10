@@ -8,9 +8,8 @@ const currentPath = process.cwd()
 const dir = 'templates';
 let make_dir;
 
-console.log('Gerando arquivos com o nome ', name)
-
 if (args[2] == '-s' && args[3] !== undefined) {
+  console.log('Gerando arquivos com o nome ', name)
   if (fs.existsSync(dir)) make_dir = 'templates/react-native/screen/';
   else make_dir = currentPath+'/node_modules/genstruct/templates/react-native/screen/';
   container(name,make_dir);
@@ -19,6 +18,7 @@ if (args[2] == '-s' && args[3] !== undefined) {
   screen(name,make_dir);
   generate.on('finish', event => { console.log('Finished!', event.success) })
 } else if (args[2] == '-r' && args[3] !== undefined) {
+  console.log('Gerando arquivos com o nome ', name)
   if (fs.existsSync(dir)) make_dir = 'templates/react-native/reducer/';
   else make_dir = currentPath+'/node_modules/genstruct/templates/react-native/reducer/';
   reducer(name,make_dir);
@@ -29,10 +29,11 @@ if (args[2] == '-s' && args[3] !== undefined) {
   helper()
 }
 
-helper = () => {
+function helper() {
   console.log('Generate files');
   console.log('----------------');
   console.log('node genstruct -s NameScreen');
+  console.log('node genstruct -r NameReducer');
 }
 
 function container(name,dir) {
