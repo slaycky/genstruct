@@ -31,8 +31,8 @@ function init() {
 }
 function helper(){
   console.log("\x1b[31m Help:");
-  console.log("\x1b[33m -s NameScreen (Generate screen ReactNative)");
-  console.log("\x1b[33m -r NameReducer (Generate reducer ReactNative)");
+  console.log("\x1b[33m -s NameScreen (Generate screen react-native)");
+  console.log("\x1b[33m -r NameReducer (Generate reducer react-native)");
 }
 
 function infor(){
