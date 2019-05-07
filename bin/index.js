@@ -74,7 +74,7 @@ function helper(){
   console.log("\x1b[31m Help:");
   console.log("\x1b[33m genstruct -a react-native -s NameScreen (Generate screen react-native)");
   console.log("\x1b[33m genstruct -a react-native -r  NameReducer (Generate reducer react-native)");
-  console.log("\x1b[33m genstruct -a serverless init (Generate Init code serverless");
+  console.log("\x1b[33m genstruct -a serverless init (Generate Init code serverless)");
 }
 
 function infor(){
