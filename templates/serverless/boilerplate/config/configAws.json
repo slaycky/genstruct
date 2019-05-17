@@ -1,0 +1,10 @@
+{
+  "pool_cognito": {
+    "UserPoolId" : "",
+    "ClientId" : "",
+    "SecretHash": ""
+  },
+  "accessKeyId": "",
+  "secretAccessKey":"",
+  "region": "us-east-1"
+}

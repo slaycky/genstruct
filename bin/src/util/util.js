@@ -14,5 +14,18 @@ class Util {
       );
     });
   }
+  executeCmd (command){
+    console.log('COMAND',command)
+    return new Promise(function(resolve, reject){
+      cmd.get(command, function(err, data, stderr){
+          if (err){
+            reject(err)
+          } else {
+            resolve(data)
+          }
+        }
+      );
+    });
+  }
 }
 module.exports = Util

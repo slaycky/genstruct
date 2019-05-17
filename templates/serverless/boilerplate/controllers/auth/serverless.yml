@@ -1,0 +1,86 @@
+service: yoube-api-users
+provider:
+  name: aws
+  apiKeys:
+    - ios
+    - name: ios_key
+    - value: oV9v5iTfE11LcnLkJVHTUXMzO1i7u9mu
+  runtime: nodejs8.10 
+functions:
+  users-show-get:
+    handler: AuthControllers.show
+    events:
+      - http:
+          path: /auth/show
+          method: get
+          cors: true
+  users-signin:
+    handler: AuthControllers.signIn
+    events:
+      - http:
+          path: /auth/sign_in
+          method: post
+          cors: true
+  users-signup:
+    handler: AuthControllers.signUp
+    events:
+      - http:
+          path: /auth/sign_up
+          method: post
+          cors: true
+  users-signout:
+    handler: AuthControllers.signOut
+    events:
+      - http:
+          path: /auth/sign_out
+          method: post
+          cors: true
+  users-confirm-code:
+    handler: AuthControllers.confirmCode
+    events:
+      - http:
+          path: /auth/confirm_code
+          method: post
+          cors: true
+  users-forgot-password:
+    handler: AuthControllers.forgotPassword
+    events:
+      - http:
+          path: /auth/forgot_password
+          method: post
+          cors: true
+  users-confirm-forgot-password:
+    handler: AuthControllers.confirmForgotPassword
+    events:
+      - http:
+          path: /auth/confirm_forgot_password
+          method: post
+          cors: true
+  users-change-password:
+    handler: AuthControllers.changePassword
+    events:
+      - http:
+          path: /auth/change_password
+          method: put
+          cors: true
+  users-update:
+    handler: AuthControllers.update
+    events:
+      - http:
+          path: /auth/update
+          method: put
+          cors: true
+          
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-domain-manager
+  - serverless-offline
+
+
+custom:
+  customDomain:
+    certificateName: '*ioasys.com.br'
+    domainName: 'api-yoube.ioasys.com.br' # Change this to your domain.
+    basePath: 'users' # This will be prefixed to all routes
+    # stage: ${self:provider.stage}
+    createRoute53Record: true

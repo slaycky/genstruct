@@ -1,0 +1,16 @@
+{
+  "database": {
+    "host": "",
+    "user": "",
+    "database":"",
+    "port": "3306",
+    "password": ""
+  },
+  "pool_cognito": {
+    "UserPoolId" : "",
+    "ClientId" : ""
+  },
+  "accessKeyId": "",
+  "secretAccessKey":"",
+  "region": ""
+}
