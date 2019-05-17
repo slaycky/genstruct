@@ -23,7 +23,12 @@ module.exports.update = async (event, context, callback) => {
       try {
         const updateAuth = await updateCognito(auth,event)
         console.log(updateAuth)
-      callback(null, helperBuildResponse.buildResponse({ body: { message: 'Usuário editado com sucesso' }, statusCode: 200 }))
+        if(!updateAuth.error){
+          callback(null, helperBuildResponse.buildResponse({ body: { message: 'Usuário editado com sucesso' }, statusCode: 200 }))
+        }else{
+          callback(null, helperBuildResponse.buildResponse({ body: { message: updateAuth.error.message }, statusCode: updateAuth.error.statusCode }))
+        }
+     
       }catch(e){
         callback(null, helperBuildResponse.buildResponse({ body: { error: e.message }, statusCode: 400 }))  
       }  
@@ -40,8 +45,7 @@ const updateCognito = (user,event) =>
       };
      cognitoidentityserviceprovider.updateUserAttributes(params, function (err, data) {
         if (err) {
-          console.log('ERROR',err)
-          reject(err);
+          resolve({error: err});
         } else {
 
           resolve(data);

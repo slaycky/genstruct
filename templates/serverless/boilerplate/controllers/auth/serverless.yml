@@ -1,10 +1,8 @@
-service: yoube-api-users
+service: yoube-api-auth
 provider:
   name: aws
   apiKeys:
-    - ios
-    - name: ios_key
-    - value: oV9v5iTfE11LcnLkJVHTUXMzO1i7u9mu
+    - api_ios
   runtime: nodejs8.10 
 functions:
   users-show-get:
@@ -14,6 +12,7 @@ functions:
           path: /auth/show
           method: get
           cors: true
+          private: true
   users-signin:
     handler: AuthControllers.signIn
     events:
@@ -21,6 +20,7 @@ functions:
           path: /auth/sign_in
           method: post
           cors: true
+          private: true
   users-signup:
     handler: AuthControllers.signUp
     events:
@@ -28,6 +28,7 @@ functions:
           path: /auth/sign_up
           method: post
           cors: true
+          private: true
   users-signout:
     handler: AuthControllers.signOut
     events:
@@ -35,34 +36,39 @@ functions:
           path: /auth/sign_out
           method: post
           cors: true
-  users-confirm-code:
+          private: true
+  users-confirmation-code:
     handler: AuthControllers.confirmCode
     events:
       - http:
-          path: /auth/confirm_code
+          path: /auth/confirmation_code
           method: post
           cors: true
-  users-forgot-password:
+          private: true
+  users-forgotpassword:
     handler: AuthControllers.forgotPassword
     events:
       - http:
           path: /auth/forgot_password
           method: post
           cors: true
-  users-confirm-forgot-password:
+          private: true
+  users-confirm-forgotpassword:
     handler: AuthControllers.confirmForgotPassword
     events:
       - http:
           path: /auth/confirm_forgot_password
           method: post
           cors: true
-  users-change-password:
+          private: true
+  users-changepassword:
     handler: AuthControllers.changePassword
     events:
       - http:
           path: /auth/change_password
           method: put
           cors: true
+          private: true
   users-update:
     handler: AuthControllers.update
     events:
@@ -70,6 +76,7 @@ functions:
           path: /auth/update
           method: put
           cors: true
+          private: true
           
 plugins:
   - serverless-iam-roles-per-function
@@ -80,7 +87,7 @@ plugins:
 custom:
   customDomain:
     certificateName: '*ioasys.com.br'
-    domainName: 'api-yoube.ioasys.com.br' # Change this to your domain.
-    basePath: 'users' # This will be prefixed to all routes
+    domainName: 'apiyoube.ioasys.com.br' # Change this to your domain.
+    basePath: 'dev' # This will be prefixed to all routes
     # stage: ${self:provider.stage}
     createRoute53Record: true

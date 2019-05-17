@@ -21,7 +21,7 @@ module.exports.signIn = async (event, context, callback) => {
     if (auth.requireLoginParams(callback)) {
       try {
       let user = await sigInCognito(auth);
-      if (user.token) {
+      if (!user.error) {
         callback(null,helperBuildResponse.buildResponse({
           body: {},
           headers: {
@@ -32,8 +32,8 @@ module.exports.signIn = async (event, context, callback) => {
         }))
       } else {
         callback(null, helperBuildResponse.buildResponse({
-          body: { message: "Erro ao validar credenciais" },
-          statusCode: 401
+          body: { message: user.error.message },
+          statusCode: user.error.statusCode
         }))
       }
     }catch(e){
@@ -60,7 +60,7 @@ const sigInCognito = (auth) =>
     cognitoidentityserviceprovider.initiateAuth(params, (err, data) => {
       if (err) {
         console.log(err)
-        reject(err)
+        resolve({error: err});
       } else {
         resolve({ token: data.AuthenticationResult.AccessToken });
       }

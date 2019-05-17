@@ -16,10 +16,10 @@ exports.show = async (event, context, callback) => {
   var params = { AccessToken: event.headers.Authorization };
   let auth = new Auth();
   let user = await getUserCognito(auth,params)
-  if (user.valide){
+  if (!user.error){
     callback(null, helperBuildResponse.buildResponse({ body:{user}, statusCode: 200  }));
   }else {  
-    callback(null, helperBuildResponse.buildResponse({ body: {message:'Credenciais inválidas'} , statusCode: 422 }));  
+    callback(null, helperBuildResponse.buildResponse({ body: {message: user.error.message} , statusCode: user.error.statusCode }));  
   }
 
 };
@@ -29,7 +29,7 @@ const getUserCognito = (user,params) =>
   new Promise((resolve, reject) => {
     cognitoidentityserviceprovider.getUser(params, function(err, data) {
       if (err) {
-        reject(err);
+        resolve({error: err});
       } else {        
         resolve(user.buildUser(data));
       }

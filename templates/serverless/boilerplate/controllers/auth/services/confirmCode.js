@@ -21,10 +21,16 @@ module.exports.confirmCode = async (event, context, callback) => {
     if (auth.requireParamsConfirm(callback)) {
       AWS.config.update({ region: 'us-east-1' });
       try {
-        await confirmCodeUser(auth)
-        callback(null, helperBuildResponse.buildResponse({ body: { message: 'Codigo confirmado com sucesso' }, statusCode: 200 }))
-      
+        const code = await confirmCodeUser(auth)
+        console.log('code',code)
+        if(!code.error){
+          callback(null, helperBuildResponse.buildResponse({ body: { message: 'Codigo confirmado com sucesso' }, statusCode: 200 }))
+        }else{
+          callback(null, helperBuildResponse.buildResponse({ body: { message: code.error.message }, statusCode: code.error.statusCode }))
+        }
+    
       }catch(e){
+        console.log('e',e)
         callback(null, helperBuildResponse.buildResponse({ body: { error: 'codigo inválido' }, statusCode: 422 }))  
       }  
     } 
@@ -42,7 +48,7 @@ const confirmCodeUser = user =>
   };
   cognitoidentityserviceprovider.confirmSignUp(params, function(err, data) {
     if (err) {
-      reject(err);
+      resolve({error: err});
     } else {
       resolve(data);
     }

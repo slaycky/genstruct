@@ -23,8 +23,11 @@ module.exports.signUp = async (event, context, callback) => {
         try {
           const createAuth = await createCognito(auth)
           console.log(createAuth)
-        callback(null, helperBuildResponse.buildResponse({ body: { message: 'Usuário criado com sucesso' }, statusCode: 200 }))
-        
+          if(!createAuth.error){
+            callback(null, helperBuildResponse.buildResponse({ body: { message: 'Usuário criado com sucesso' }, statusCode: 200 }))
+          }else{
+            callback(null, helperBuildResponse.buildResponse({ body: { message: createAuth.error.message }, statusCode: createAuth.error.statusCode }))
+          }        
         }catch(e){
           callback(null, helperBuildResponse.buildResponse({ body: { error: e.message }, statusCode: e.statusCode }))  
         }  
@@ -44,7 +47,7 @@ const createCognito = user =>
       };
      cognitoidentityserviceprovider.signUp(params, function (err, data) {
         if (err) {
-          reject(err);
+          resolve({error: err});
         } else {
 
           resolve(data.UserSub);
