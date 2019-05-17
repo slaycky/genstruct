@@ -63,7 +63,7 @@ class BoilerPlateServerless {
   }
   sequelizeInit(project_name){
     const util = new Util
-    console.log("\x1b[34m     #### \x1b[37m Gerando arquivos do sequelize \x1b[34m ####")
+    console.log("\x1b[34m#### \x1b[37m Gerando arquivos do sequelize \x1b[34m ####")
     util.executeCmd(`cd ${project_name} && sequelize init`)
   }
   gulp(project_name,dir) {
@@ -103,7 +103,14 @@ class BoilerPlateServerless {
       if (err) {
         console.error(err);
       } else {
-        console.log("user success copy!");
+        console.log("auth controllers success copy!");
+      }
+    });
+    fse.copy(dir+'/models', project_name+'/models', function (err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("models auth success copy!");
       }
     });
   }

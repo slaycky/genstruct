@@ -8,28 +8,6 @@ init();
 
 function init() {
   getApplication();
-  // switch (args[2]) {
-  //   case '-s':
-  //     if (args[3] !== undefined) {
-  //       screen = new Screen
-  //       screen.generate(args)
-  //     }
-  //     else infor()
-  //     break;
-  //   case '-r':
-  //     if (args[3] !== undefined) {
-  //       reducer = new Reducer
-  //       reducer.generate(args)
-  //     }
-  //     else infor()
-  //     break;
-  //   case '-h':
-  //     helper()
-  //     break ;
-  //   default:
-  //     infor()
-  //   break;
-  // }
 }
 
 function getApplication(){
@@ -37,6 +15,20 @@ function getApplication(){
     case '-a':
       if (args[3] !== undefined) {
         getFunctionApplication(args[3],args[4])
+      }
+      else infor()
+      break;
+    case '-s':
+      if (args[3] !== undefined) {
+        screen = new Screen
+        screen.generate(args)
+      }
+      else infor()
+      break;
+    case '-r':
+      if (args[3] !== undefined) {
+        reducer = new Reducer
+        reducer.generate(args)
       }
       else infor()
       break;
